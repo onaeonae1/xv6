@@ -8,6 +8,6 @@ int sys_hello(void){
   return hello(str);
 }
 int hello(char *str){
-  cprintf("hello %s \n", str);
+  cprintf("Hello %s \n", str);
   return 0;
 }
