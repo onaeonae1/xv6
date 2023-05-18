@@ -89,3 +89,21 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+int
+sys_getticket(void){
+  return myproc()->tickets;
+}
+
+int
+sys_setticket(void){
+  int newTickets;
+  if(argint(0, &newTickets)<0){
+    return -1;
+  }
+  else{
+    struct proc* curproc = myproc();
+    curproc->tickets=newTickets;
+    return curproc->tickets;
+  }
+}
