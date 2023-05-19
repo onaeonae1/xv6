@@ -23,7 +23,6 @@ int getpid(void);
 char* sbrk(int);
 int sleep(int);
 int uptime(void);
-int hello(char* string);
 int getticket(void);
 int setticket(int);
 

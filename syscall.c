@@ -103,7 +103,6 @@ extern int sys_unlink(void);
 extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
-extern int sys_hello(void);
 extern int sys_setticket(void);
 extern int sys_getticket(void);
 
@@ -129,7 +128,6 @@ static int (*syscalls[])(void) = {
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
-[SYS_hello]   sys_hello,
 [SYS_setticket]   sys_setticket,
 [SYS_getticket]   sys_getticket
 };
