@@ -331,13 +331,12 @@ scheduler(void)
   c->proc = 0;
   
   int checkedTickets =0;
+  int randomValue = getRandomSched();
   for(;;){
     // Enable interrupts on this processor.
     sti();
 
     //int checkedProcesses = 0;
-    int randomValue = get_random_value(202);
-
 
     //cprintf("R.V -> %d | Sum of Tickets -> %d \n", randomValue, totalTickets);
 
@@ -346,24 +345,25 @@ scheduler(void)
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
-      
-
-      // select by ticket
-      checkedTickets += p->tickets;
+      int pid = p->pid;
+      if(pid>=3){
+        checkedTickets += p->tickets;
       if(!(checkedTickets>=randomValue)){
         continue;
       }
-
+        cprintf("---------------[Process %d]------------------\n", pid);
+        cprintf("[Ticket: %d || Sum: %d || RandomValue: %d]\n", p->tickets, checkedTickets, randomValue); 
+        cprintf("-----------------------------------------------\n");
+        checkedTickets=0;
+      }
+      
       //continue pass? process selection by ticket is done!
-      cprintf("==================\n");
-      cprintf("process %d select by ticket value %d(%d) | %d \n", p->pid, checkedTickets,p->tickets,randomValue);
-      cprintf("==================\n");
-      checkedTickets =0 ;
 
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
       c->proc = p;
+      setSchedSeed(p->pid);
       switchuvm(p);
       p->state = RUNNING;
 
